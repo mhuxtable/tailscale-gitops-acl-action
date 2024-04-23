@@ -35,6 +35,13 @@ runs:
       run: |
         echo "::error title=⛔ error hint::only one of API Key or OAuth secret should be specified.
         exit 1
+    - name: Check action is valid
+      if: ${{ inputs['action'] != 'test' && inputs['action'] != 'apply' }}
+      shell: bash
+      run: |
+        echo "::error title=⛔ error hint::action must be either 'test' or 'apply'"
+        exit 1
+
     - uses: actions/setup-go@v5
       with:
         go-version: 1.22.1
